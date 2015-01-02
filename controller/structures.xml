@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE structures SYSTEM "../doc/structures.dtd">
+<structures>
+	<structure id="taoDeliveryTemplate_main" name="Delivery Templates" level="15" group="main">
+		<description />
+		<sections>
+			<section id="taoDeliveryTemplate_main" name="Delivery Templates" url="/taoDeliveryTemplate/TaoDeliveryTemplate/index" />
+			<section id="taoDeliveryTemplate_other" name="Template" url="/taoDeliveryTemplate/TaoDeliveryTemplate/templateExample" />
+		</sections>
+	</structure>
+</structures>
