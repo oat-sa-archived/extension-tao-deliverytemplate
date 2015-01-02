@@ -1,6 +1,6 @@
 {
 
-    "name": "oat/extension-tao-deliverytemplate",
+    "name": "oat-sa/extension-tao-deliverytemplate",
     "description" : "Allows the generation of delivery templates to recreate the same delivery several times. This extension is designed for backward compatibility with Tao 2.6 and does not offer significant new features.",
     "type" : "tao-extension",
     "authors" : [
