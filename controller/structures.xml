@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE structures SYSTEM "../doc/structures.dtd">
+<!DOCTYPE structures SYSTEM "../../tao/doc/structures.dtd">
 <structures>
-	<structure id="taoDeliveryTemplate_main" name="Delivery Templates" level="15" group="main">
-		<description />
-		<sections>
-			<section id="taoDeliveryTemplate_main" name="Delivery Templates" url="/taoDeliveryTemplate/TaoDeliveryTemplate/index" />
-			<section id="taoDeliveryTemplate_other" name="Template" url="/taoDeliveryTemplate/TaoDeliveryTemplate/templateExample" />
-		</sections>
-	</structure>
+    <structure id="delivery" name="Deliveries" level="4" group="main">
+        <sections>
+            <section id="manage_delivery_templates" name="Delivery Templates" url="/taoDeliveryTemplate/DeliveryTemplate/editTemplate">
+                <trees>
+                    <tree name="Delivery Templates"
+                          className="Delivery"
+                          dataUrl="/taoDeliveryTemplate/DeliveryTemplate/getOntologyData"
+                          rootNode="http://www.tao.lu/Ontologies/TAODelivery.rdf#DeliveryTemplate"
+                          selectClass="deliverytemplate-class-properties"
+                          selectInstance="delivery-template-properties"
+                          delete="delivery-template-delete" 
+                    />
+                </trees>
+                <actions>
+                	<action id="deliverytemplate-class-properties" name="Properties" url="/taoDeliveryTemplate/DeliveryTemplate/editClassProperties" group="content" context="class">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action id="delivery-template-properties" name="Properties"  url="/taoDeliveryTemplate/DeliveryTemplate/editTemplate" group="content" context="instance">
+                        <icon id="icon-edit"/>
+                    </action> 
+                    <action id="delivery-template-new" name="New template" url="/taoDeliveryTemplate/DeliveryTemplate/addInstance" context="class" group="tree" binding="instanciate">
+                        <icon id="icon-add"/>
+                    </action>
+                    <action id="delivery-template-delete" name="Delete" url="/taoDeliveryTemplate/DeliveryTemplate/delete" context="instance" group="tree" binding="removeNode">
+                        <icon id="icon-bin"/>
+                    </action>
+                    <action id="delivery-template-filter" name="Filter" context="*" group="search" binding="filter">
+                        <icon id="icon-filter"/>
+                    </action>
+                    <action id="delivery-template-search" name="Search" url="/taoDeliveryTemplate/Delivery/search" context="*" group="search" binding="launchFinder">
+                        <icon id="icon-find"/>
+                    </action>  
+                </actions>
+            </section>
+        </sections>
+    </structure>
 </structures>
