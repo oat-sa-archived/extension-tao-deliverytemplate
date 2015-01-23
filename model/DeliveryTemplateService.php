@@ -23,7 +23,11 @@ use tao_models_classes_ClassService;
 use core_kernel_classes_Class;
 use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
+use common_exception_Error;
 use taoResultServer_models_classes_ResultServerAuthoringService;
+use oat\taoDeliveryTemplate\rdf\DeliveryTemplate;
+use oat\taoDeliveryTemplate\rdf\DeliveryContent;
+
 /**
  * Service to manage the authoring of delivery templates
  *
@@ -41,7 +45,7 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
      */
     public function getRootClass()
     {
-        return new core_kernel_classes_Class(CLASS_DELIVERY_TEMPLATE);
+        return new core_kernel_classes_Class(DeliveryTemplate::CLASS_URI);
     }
 
     /**
@@ -70,7 +74,7 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
 
     public function getContent($delivery)
     {
-        $content = $delivery->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_DELIVERY_CONTENT));
+        $content = $delivery->getOnePropertyValue(new core_kernel_classes_Property(DeliveryTemplate::PROPERTY_CONTENT));
         return $content;
     }
 
@@ -81,7 +85,7 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
      */
     public function getAllContentClasses()
     {
-        $deliveryContentSuperClass = new core_kernel_classes_Class(CLASS_ABSTRACT_DELIVERYCONTENT);
+        $deliveryContentSuperClass = new core_kernel_classes_Class(DeliveryContent::CLASS_URI);
         $subclasses = $deliveryContentSuperClass->getSubClasses(true);
         return $subclasses;
     }
@@ -97,7 +101,7 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
 
     public function deleteInstance(core_kernel_classes_Resource $delivery)
     {
-        $content = $delivery->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_DELIVERY_CONTENT));
+        $content = $delivery->getOnePropertyValue(new core_kernel_classes_Property(DeliveryTemplate::PROPERTY_CONTENT));
         if (! is_null($content)) {
             $impl = $this->getImplementationByContent($content);
             $impl->delete($content);
@@ -134,7 +138,7 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
         if (!is_null($content)) {
             $impl = $this->getImplementationByContent($content);
             $cloneContent = $impl->cloneContent($content);
-            $clone->editPropertyValues(new core_kernel_classes_Property(PROPERTY_DELIVERY_CONTENT), $cloneContent);
+            $clone->editPropertyValues(new core_kernel_classes_Property(DeliveryTemplate::PROPERTY_CONTENT), $cloneContent);
         }
         $this->onChangeLabel($clone);
         return $clone;
@@ -151,30 +155,45 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
     {
         $impl = $this->getImplementationByContentClass($contentClass);
         $content = $impl->createContent($delivery);
-        return $delivery->editPropertyValues(new core_kernel_classes_Property(PROPERTY_DELIVERY_CONTENT), $content);
+        return $delivery->editPropertyValues(new core_kernel_classes_Property(DeliveryTemplate::PROPERTY_CONTENT), $content);
     }
 
     /**
      * Returns the implementation from the content
      *
-     * @param core_kernel_classes_Resource $test            
+     * @param core_kernel_classes_Resource $test
      * @return taoDelivery_models_classes_ContentModel
      */
     public function getImplementationByContent(core_kernel_classes_Resource $content)
     {
-        $service = \taoDelivery_models_classes_DeliveryAssemblyService::singleton();
-        return $service->getImplementationByContent($content);
+        foreach ($content->getTypes() as $type) {
+            if ($type->isSubClassOf(new core_kernel_classes_Class(DeliveryContent::CLASS_URI))) {
+                return $this->getImplementationByContentClass($type);
+            }
+        }
+        throw new common_exception_NoImplementation('No implementation found for DeliveryContent ' . $content->getUri());
     }
-
+    
     /**
      * Returns the implementation from the content class
      *
-     * @param core_kernel_classes_Class $contentClass            
+     * @param core_kernel_classes_Class $contentClass
      * @return taoDelivery_models_classes_ContentModel
      */
     public function getImplementationByContentClass(core_kernel_classes_Class $contentClass)
     {
-        $service = \taoDelivery_models_classes_DeliveryAssemblyService::singleton();
-        return $service->getImplementationByContentClass($contentClass);
+        if (empty($contentClass)) {
+            throw new common_exception_NoImplementation(__FUNCTION__ . ' called on a NULL contentClass');
+        }
+        $classname = (string) $contentClass->getOnePropertyValue(new core_kernel_classes_Property(DeliveryContent::PROPERTY_IMPLEMENTATION));
+        if (empty($classname)) {
+            throw new common_exception_NoImplementation('No implementation found for contentClass ' . $contentClass->getUri());
+        }
+        if (! class_exists($classname) || ! in_array('oat\\taoDeliveryTemplate\\model\\ContentModel', class_implements($classname))) {
+            throw new common_exception_Error('Content implementation '.$classname.' not found, or not compatible for content class '.$contentClass->getUri());
+             
+        }
+        return new $classname();
     }
+
 }

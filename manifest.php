@@ -33,6 +33,11 @@ return array(
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoDeliveryTemplateManager', array('ext'=>'taoDeliveryTemplate')),
     ),
+    'install' => array(
+        'rdf' => array(
+            dirname(__FILE__). '/install/install/deliveryTemplate.rdf'
+        )
+    ),
     'uninstall' => array(
     ),
     'autoload' => array (

@@ -24,6 +24,9 @@ use core_kernel_classes_Class;
 use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use taoResultServer_models_classes_ResultServerAuthoringService;
+use common_report_Report;
+use taoDelivery_models_classes_DeliveryAssemblyService;
+
 /**
  * Service to manage the authoring of delivery templates
  *
@@ -56,7 +59,7 @@ class TemplateAssemblyService extends \taoDelivery_models_classes_DeliveryAssemb
      * and desactivates other assemblies crearted from the same template
      *
      * @param core_kernel_classes_Resource $deliveryTemplate
-     * @throws taoDelivery_models_classes_EmptyDeliveryException
+     * @throws EmptyDeliveryException
      * @return common_report_Report
      */
     public function createAssemblyFromTemplate(core_kernel_classes_Resource $deliveryTemplate) {
@@ -65,7 +68,7 @@ class TemplateAssemblyService extends \taoDelivery_models_classes_DeliveryAssemb
     
         $content = DeliveryTemplateService::singleton()->getContent($deliveryTemplate);
         if (is_null($content)) {
-            throw new \taoDelivery_models_classes_EmptyDeliveryException('Delivery '.$deliveryTemplate->getUri().' has no content');
+            throw new EmptyDeliveryException('Delivery '.$deliveryTemplate->getUri().' has no content');
         }
     
         $props = $deliveryTemplate->getPropertiesValues(array(
@@ -78,7 +81,46 @@ class TemplateAssemblyService extends \taoDelivery_models_classes_DeliveryAssemb
         ));
         $props[PROPERTY_COMPILEDDELIVERY_DELIVERY] = array($deliveryTemplate);
     
-        return $this->createAssembly($assemblyClass, $content, $props);
+        return $this->createAssemblyByContent($assemblyClass, $content, $props);
 
     }
+    
+    /**
+     *
+     * @param core_kernel_classes_Class $deliveryClass
+     * @param core_kernel_classes_Resource $content
+     * @param unknown $properties
+     * @return common_report_Report
+     */
+    public function createAssemblyByContent(core_kernel_classes_Class $deliveryClass, core_kernel_classes_Resource $content, $properties = array()) {
+    
+        // report will be replaced unless an exception occures
+        $report = new common_report_Report(common_report_Report::TYPE_ERROR, __('Delivery could not be published'));
+        try {
+            $compiler = $this->getCompiler($content);
+            $report = $compiler->compile();
+            if ($report->getType() == common_report_Report::TYPE_SUCCESS) {
+                $serviceCall = $report->getData();
+    
+                $properties[PROPERTY_COMPILEDDELIVERY_DIRECTORY] = $compiler->getSpawnedDirectoryIds();
+    
+                $assemblyService = taoDelivery_models_classes_DeliveryAssemblyService::singleton();
+                $compilationInstance = $assemblyService->createAssemblyFromServiceCall($deliveryClass, $serviceCall, $properties);
+                $report->setData($compilationInstance);
+            }
+        } catch (Exception $e) {
+            if ($e instanceof common_exception_UserReadableException) {
+                $report->add($e);
+            } else {
+                common_Logger::w($e->getMessage());
+            }
+        }
+        return $report;
+    
+    }
+    
+    protected function getCompiler(core_kernel_classes_Resource $content){
+        return DeliveryCompiler::createCompiler($content);
+    }
+    
 }

@@ -28,6 +28,7 @@ use tao_helpers_Uri;
 use tao_models_classes_dataBinding_GenerisFormDataBinder;
 use taoDelivery_actions_form_Delivery;
 use oat\taoDeliveryTemplate\model\DeliveryTemplateService;
+use core_kernel_classes_Class;
 
 /**
  * Delivery template management controller
@@ -139,7 +140,7 @@ class DeliveryTemplate extends tao_actions_SaSModule {
             foreach ($this->service->getAllContentClasses() as $class) {
                 $options[$class->getUri()] = $class->getLabel();
             }
-            $renderer = new Renderer(DIR_VIEWS.'templates'.DIRECTORY_SEPARATOR.'form_content.tpl');
+            $renderer = new Renderer(DIR_VIEWS.'templates'.DIRECTORY_SEPARATOR.'DeliveryTemplate'.DIRECTORY_SEPARATOR.'ContentForm.tpl');
             $renderer->setData('models', $options);
             $renderer->setData('saveUrl', _url('setContentClass', null, null, array('uri' => $delivery->getUri())));
             return $renderer->render();
