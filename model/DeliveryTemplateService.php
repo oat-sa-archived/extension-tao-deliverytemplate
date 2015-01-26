@@ -109,27 +109,6 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
         return $delivery->delete();
     }
 
-    /**
-     * Delete a class of deliveries
-     *
-     * @access public
-     * @author Joel Bout, <joel@taotesting.com>
-     * @param  Class clazz
-     * @return boolean
-     */
-    public function deleteDeliveryClass( core_kernel_classes_Class $clazz)
-    {
-        $returnValue = (bool) false;
-
-        if($clazz->isSubClassOf($this->getRootClass()) && !$clazz->equals($this->getRootClass())) {
-            $returnValue = $clazz->delete();
-        } else {
-            common_Logger::w('Cannot '.__FUNCTION__.' of class '.$clazz->getUri());
-        }
-    
-        return (bool) $returnValue;
-    }
-    
     public function cloneInstance(core_kernel_classes_Resource $delivery, core_kernel_classes_Class $clazz = null)
     {
         $clone = parent::cloneInstance($delivery, $clazz);
@@ -187,7 +166,7 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
         }
         $classname = (string) $contentClass->getOnePropertyValue(new core_kernel_classes_Property(DeliveryContent::PROPERTY_IMPLEMENTATION));
         if (empty($classname)) {
-            throw new common_exception_NoImplementation('No implementation found for contentClass ' . $contentClass->getUri());
+            throw new \common_exception_NoImplementation('No implementation found for contentClass ' . $contentClass->getUri());
         }
         if (! class_exists($classname) || ! in_array('oat\\taoDeliveryTemplate\\model\\ContentModel', class_implements($classname))) {
             throw new common_exception_Error('Content implementation '.$classname.' not found, or not compatible for content class '.$contentClass->getUri());

@@ -65,14 +65,6 @@ class DeliveryTemplate extends tao_actions_SaSModule {
         return $this->service;
     }
     
-    public function listDeliveries()
-    {
-        $this->setData('class', $this->getCurrentClass());
-        $deliveries = $this->getCurrentClass()->getInstances();
-        $this->setData('deliveries', $deliveries);
-        $this->setView('delivery_list.tpl');
-    }
-    
     /**
      * Edit a delivery template instance
      *
