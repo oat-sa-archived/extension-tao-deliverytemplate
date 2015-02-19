@@ -203,5 +203,22 @@ class DeliveryTemplateServiceTest extends TaoPhpUnitTestRunner
         $this->deliveryTemplateService->deleteInstance($deliveryInstance);
         $this->assertFalse($deliveryInstance->exists());
     }
-
+    
+    /**
+     * @expectedException common_exception_NoImplementation
+     */
+    public function testGetImplementationByContentClass()
+    {
+        $inexistingClass = new core_kernel_classes_Class('doesnotexist');
+        DeliveryTemplateService::singleton()->getImplementationByContentClass($inexistingClass);
+    }
+    
+    /**
+     * @expectedException common_exception_NoImplementation
+     */
+    public function testGetImplementationByContent()
+    {
+        $inexistingClass = new core_kernel_classes_Class('doesnotexist');
+        DeliveryTemplateService::singleton()->getImplementationByContent($inexistingClass);
+    }
 }
