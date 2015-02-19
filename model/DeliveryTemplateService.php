@@ -162,9 +162,6 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
      */
     public function getImplementationByContentClass(core_kernel_classes_Class $contentClass)
     {
-        if (empty($contentClass)) {
-            throw new common_exception_NoImplementation(__FUNCTION__ . ' called on a NULL contentClass');
-        }
         $classname = (string) $contentClass->getOnePropertyValue(new core_kernel_classes_Property(DeliveryContent::PROPERTY_IMPLEMENTATION));
         if (empty($classname)) {
             throw new common_exception_NoImplementation('No implementation found for contentClass ' . $contentClass->getUri());
