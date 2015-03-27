@@ -24,6 +24,7 @@ use core_kernel_classes_Class;
 use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use common_exception_Error;
+use common_exception_NoImplementation;
 use taoResultServer_models_classes_ResultServerAuthoringService;
 use oat\taoDeliveryTemplate\rdf\DeliveryTemplate;
 use oat\taoDeliveryTemplate\rdf\DeliveryContent;
@@ -161,12 +162,9 @@ class DeliveryTemplateService extends tao_models_classes_ClassService
      */
     public function getImplementationByContentClass(core_kernel_classes_Class $contentClass)
     {
-        if (empty($contentClass)) {
-            throw new common_exception_NoImplementation(__FUNCTION__ . ' called on a NULL contentClass');
-        }
         $classname = (string) $contentClass->getOnePropertyValue(new core_kernel_classes_Property(DeliveryContent::PROPERTY_IMPLEMENTATION));
         if (empty($classname)) {
-            throw new \common_exception_NoImplementation('No implementation found for contentClass ' . $contentClass->getUri());
+            throw new common_exception_NoImplementation('No implementation found for contentClass ' . $contentClass->getUri());
         }
         if (! class_exists($classname) || ! in_array('oat\\taoDeliveryTemplate\\model\\ContentModel', class_implements($classname))) {
             throw new common_exception_Error('Content implementation '.$classname.' not found, or not compatible for content class '.$contentClass->getUri());
