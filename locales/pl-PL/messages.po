@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.0-RC04\n"
-"PO-Revision-Date: 2015-03-06T16:02:04\n"
+"Project-Id-Version: TAO 3.0-RC05\n"
+"PO-Revision-Date: 2015-04-09T09:21:48\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: pl-PL\n"
@@ -25,6 +25,7 @@ msgstr ""
 msgid "Create Delivery"
 msgstr ""
 
+#, tao-public
 msgid "Delete"
 msgstr ""
 
@@ -41,18 +42,22 @@ msgstr ""
 msgid "Delivery saved"
 msgstr ""
 
+#, tao-public
 msgid "Delivery Templates"
 msgstr ""
 
+#, tao-public
 msgid "Filter"
 msgstr ""
 
+#, tao-public
 msgid "New template"
 msgstr ""
 
 msgid "Ok"
 msgstr ""
 
+#, tao-public
 msgid "Properties"
 msgstr ""
 
@@ -74,6 +79,7 @@ msgstr ""
 msgid "Recompile the delivery"
 msgstr ""
 
+#, tao-public
 msgid "Search"
 msgstr ""
 
