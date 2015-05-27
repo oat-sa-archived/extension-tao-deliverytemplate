@@ -1,6 +1,5 @@
 <?php
 $GLOBALS['__l10n'][" next"]="التالي";
-$GLOBALS['__l10n'][" of the instance "]="من المثال";
 $GLOBALS['__l10n'][" requires a subgrid adapter"]="يحتاج إلى محول subgrid";
 $GLOBALS['__l10n']["(empty)"]="(فارغ)";
 $GLOBALS['__l10n']["A similar resource has already been versioned"]="مصدر مشابه تم تعيين اصداره بالفعل";
@@ -10,9 +9,7 @@ $GLOBALS['__l10n']["Add"]="إضافة";
 $GLOBALS['__l10n']["Add / Edit lists"]="إضافة / تعديل القوائم";
 $GLOBALS['__l10n']["Add a user"]="اضافة مستخدم";
 $GLOBALS['__l10n']["Advanced Mode"]="طريقة متقدمة";
-$GLOBALS['__l10n']["All"]="كل";
 $GLOBALS['__l10n']["all"]="كل";
-$GLOBALS['__l10n']["All (the complete TAO Module)"]="الكل";
 $GLOBALS['__l10n']["An error occured during user deletion"]="حدث خطأ أثناء حذف المستخدم";
 $GLOBALS['__l10n']["Authoring"]="التأليف";
 $GLOBALS['__l10n']["Browse"]="تصفح";
@@ -61,7 +58,6 @@ $GLOBALS['__l10n']["List"]="قائمة";
 $GLOBALS['__l10n']["List deleted"]="حذف القائمة";
 $GLOBALS['__l10n']["List values"]="قيم القائمة";
 $GLOBALS['__l10n']["Lists"]="القوائم";
-$GLOBALS['__l10n']["Local Data (the local namespace containing only the data inserted by the users)"]="(البيانات المحلية (مساحة الاسم المحلي الذي يحتوي فقط على البيانات المدرجة من قبل المستخدمين";
 $GLOBALS['__l10n']["Login"]="الدخول";
 $GLOBALS['__l10n']["Manage data list"]="إدارة قائمة البيانات";
 $GLOBALS['__l10n']["Manage groups"]="إدارة المجموعات";
