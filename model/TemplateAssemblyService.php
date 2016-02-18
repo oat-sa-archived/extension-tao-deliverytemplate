@@ -25,7 +25,7 @@ use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use taoResultServer_models_classes_ResultServerAuthoringService;
 use common_report_Report;
-use taoDelivery_models_classes_DeliveryAssemblyService;
+use oat\taoDeliveryRdf\model\DeliveryAssemblyService;
 
 /**
  * Service to manage the authoring of delivery templates
@@ -34,7 +34,7 @@ use taoDelivery_models_classes_DeliveryAssemblyService;
  * @author Joel Bout, <joel@taotesting.com>
  * @package taoDelivery
  */
-class TemplateAssemblyService extends \taoDelivery_models_classes_DeliveryAssemblyService
+class TemplateAssemblyService extends DeliveryAssemblyService
 {
     /**
      * Returns the assemblies derived from the delivery template
@@ -104,8 +104,7 @@ class TemplateAssemblyService extends \taoDelivery_models_classes_DeliveryAssemb
     
                 $properties[PROPERTY_COMPILEDDELIVERY_DIRECTORY] = $compiler->getSpawnedDirectoryIds();
     
-                $assemblyService = taoDelivery_models_classes_DeliveryAssemblyService::singleton();
-                $compilationInstance = $assemblyService->createAssemblyFromServiceCall($deliveryClass, $serviceCall, $properties);
+                $compilationInstance = $this->createAssemblyFromServiceCall($deliveryClass, $serviceCall, $properties);
                 $report->setData($compilationInstance);
             }
         } catch (Exception $e) {
