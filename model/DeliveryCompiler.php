@@ -20,11 +20,10 @@
 namespace oat\taoDeliveryTemplate\model;
 
 use tao_models_classes_Compiler;
-use taoDelivery_models_classes_TrackedStorage;
-use taoDelivery_models_classes_DeliveryAssemblyService;
 use common_exception_Error;
 use taoTests_models_classes_TestsService;
 use core_kernel_classes_Resource;
+use oat\taoDeliveryRdf\model\TrackedStorage;
 
 /**
  * A Delivery compiler
@@ -42,7 +41,7 @@ abstract class DeliveryCompiler extends tao_models_classes_Compiler
      * @return DeliveryCompiler
      */
     public static function createCompiler(core_kernel_classes_Resource $deliveryContent) {
-        $storage = new taoDelivery_models_classes_TrackedStorage();
+        $storage = new TrackedStorage();
         $compilerClass = DeliveryTemplateService::singleton()->getImplementationByContent($deliveryContent)->getCompilerClass();
         
         if (!class_exists($compilerClass)) {
