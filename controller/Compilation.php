@@ -22,7 +22,6 @@
 namespace oat\taoDeliveryTemplate\controller;
 
 use tao_actions_SaSModule;
-use taoDelivery_models_classes_DeliveryAssemblyService;
 use oat\taoDeliveryTemplate\model\TemplateAssemblyService;
 
 /**

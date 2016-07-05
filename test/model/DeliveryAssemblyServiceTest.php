@@ -21,8 +21,6 @@ namespace oat\taoDeliveryTemplate\test\model;
 
 use oat\tao\test\TaoPhpUnitTestRunner;
 use \common_ext_ExtensionsManager;
-use taoDelivery_models_classes_DeliveryAssemblyService;
-use \taoDelivery_models_classes_DeliveryTemplateService;
 use \taoTests_models_classes_TestsService;
 use \core_kernel_classes_Class;
 use \core_kernel_classes_Property;
@@ -32,6 +30,7 @@ use oat\taoDeliveryTemplate\rdf\DeliveryContent;
 use oat\taoDeliveryTemplate\rdf\DeliveryTemplate;
 use oat\taoDeliveryTemplate\model\DeliveryTemplateService;
 use oat\taoDeliveryTemplate\model\TemplateAssemblyService;
+use oat\taoDeliveryRdf\model\DeliveryAssemblyService;
 
 class DeliveryAssemblyServiceTest extends TaoPhpUnitTestRunner
 {
@@ -46,10 +45,10 @@ class DeliveryAssemblyServiceTest extends TaoPhpUnitTestRunner
     public function setUp()
     {
         // load delivery constants, none required for deliveryTemplate
-        common_ext_ExtensionsManager::singleton()->getExtensionById('taoDelivery');
+        common_ext_ExtensionsManager::singleton()->getExtensionById('taoDeliveryRdf');
         
         TaoPhpUnitTestRunner::initTest();
-        $this->assemblyService = taoDelivery_models_classes_DeliveryAssemblyService::singleton();
+        $this->assemblyService = DeliveryAssemblyService::singleton();
         
         $testsService = taoTests_models_classes_TestsService::singleton();
         $this->test = $testsService->createInstance($testsService->getRootclass(), 'deliveryUnitCompilerTest');
@@ -72,7 +71,7 @@ class DeliveryAssemblyServiceTest extends TaoPhpUnitTestRunner
 
     protected function getCompilerMock($resource, $storage)
     {
-        $compilerMock = $this->getMockBuilder('taoDelivery_models_classes_DeliveryCompiler')
+        $compilerMock = $this->getMockBuilder('oat\\taoDeliveryTemplate\\model\\DeliveryCompiler')
             ->setConstructorArgs(array(
             $resource,
             $storage

@@ -24,11 +24,11 @@ return array(
 	'label' => 'Delivery Templates',
 	'description' => 'Allows the generation of delivery templates to recreate the same delivery several times. This extension is designed for backward compatibility with Tao 2.6 and does not offer significant new features.',
     'license' => 'GPL-2.0',
-    'version' => '1.0',
+    'version' => '2.0',
 	'author' => 'Open Assessment Technologies SA',
-	'requires' => array('taoDelivery' => '>=2.6'),
-	// for compatibility
-	'dependencies' => array('taoDelivery'),
+	'requires' => array(
+	    'taoDeliveryRdf' => '>=1.1'
+	),
 	'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#taoDeliveryTemplateManager',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoDeliveryTemplateManager', array('ext'=>'taoDeliveryTemplate')),

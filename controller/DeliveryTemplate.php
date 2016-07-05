@@ -29,6 +29,7 @@ use tao_models_classes_dataBinding_GenerisFormDataBinder;
 use taoDelivery_actions_form_Delivery;
 use oat\taoDeliveryTemplate\model\DeliveryTemplateService;
 use core_kernel_classes_Class;
+use oat\taoDeliveryRdf\view\form\DeliveryForm;
 
 /**
  * Delivery template management controller
@@ -77,7 +78,7 @@ class DeliveryTemplate extends tao_actions_SaSModule {
         $clazz = $this->getCurrentClass();
         $delivery = $this->getCurrentInstance();
     
-        $formContainer = new taoDelivery_actions_form_Delivery($clazz, $delivery);
+        $formContainer = new DeliveryForm($clazz, $delivery);
         $myForm = $formContainer->getForm();
     
         $myForm->evaluate();
@@ -132,7 +133,8 @@ class DeliveryTemplate extends tao_actions_SaSModule {
             foreach ($this->service->getAllContentClasses() as $class) {
                 $options[$class->getUri()] = $class->getLabel();
             }
-            $renderer = new Renderer(DIR_VIEWS.'templates'.DIRECTORY_SEPARATOR.'DeliveryTemplate'.DIRECTORY_SEPARATOR.'ContentForm.tpl');
+            $dirView = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoDeliveryTemplate')->getConstant('DIR_VIEWS');
+            $renderer = new Renderer($dirView.'templates'.DIRECTORY_SEPARATOR.'DeliveryTemplate'.DIRECTORY_SEPARATOR.'ContentForm.tpl');
             $renderer->setData('models', $options);
             $renderer->setData('saveUrl', _url('setContentClass', null, null, array('uri' => $delivery->getUri())));
             return $renderer->render();
