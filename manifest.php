@@ -24,7 +24,7 @@ return array(
 	'label' => 'Delivery Templates',
 	'description' => 'Allows the generation of delivery templates to recreate the same delivery several times. This extension is designed for backward compatibility with Tao 2.6 and does not offer significant new features.',
     'license' => 'GPL-2.0',
-    'version' => '2.0',
+    'version' => '3.0.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
 	    'taoDeliveryRdf' => '>=1.1'
@@ -54,9 +54,6 @@ return array(
 	    
 		#BASE URL (usually the domain root)
 		'BASE_URL' => ROOT_URL.'taoDeliveryTemplate/',
-	    
-	    #BASE WWW required by JS
-	    'BASE_WWW' => ROOT_URL.'taoDeliveryTemplate/views/'
 	),
     'extra' => array(
         'structures' => dirname(__FILE__).DIRECTORY_SEPARATOR.'controller'.DIRECTORY_SEPARATOR.'structures.xml',
