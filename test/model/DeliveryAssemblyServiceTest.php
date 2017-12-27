@@ -19,6 +19,8 @@
  */
 namespace oat\taoDeliveryTemplate\test\model;
 
+use oat\generis\model\GenerisRdf;
+use oat\generis\model\OntologyRdfs;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use \common_ext_ExtensionsManager;
 use \taoTests_models_classes_TestsService;
@@ -58,7 +60,7 @@ class DeliveryAssemblyServiceTest extends TaoPhpUnitTestRunner
         $this->contentClass = $deliveryContentSuperClass->createSubClass('abstractContentSubclass');
         $this->content = $this->contentClass->createInstanceWithProperties(array(
             DeliveryTemplate::PROPERTY_CONTENT => $this->test->getUri(),
-            RDFS_LABEL => 'contentInstanceUnitTest'
+            OntologyRdfs::RDFS_LABEL => 'contentInstanceUnitTest'
         ));
     }
 
@@ -93,7 +95,7 @@ class DeliveryAssemblyServiceTest extends TaoPhpUnitTestRunner
         
         $fakeServiceCall->expects($this->any())
             ->method('toOntology')
-            ->will($this->returnValue(GENERIS_TRUE));
+            ->will($this->returnValue(GenerisRdf::GENERIS_TRUE));
         
         $report = new common_report_Report(common_report_Report::TYPE_INFO);
         $report->setType(common_report_Report::TYPE_SUCCESS);
@@ -166,7 +168,7 @@ class DeliveryAssemblyServiceTest extends TaoPhpUnitTestRunner
         $this->assertInstanceOf('core_kernel_classes_Literal', current($values[PROPERTY_COMPILEDDELIVERY_TIME]));
         $this->assertGreaterThanOrEqual(time(), intval(current($values[PROPERTY_COMPILEDDELIVERY_TIME])->literal));
         $this->assertInstanceOf('core_kernel_classes_Resource', current($values[PROPERTY_COMPILEDDELIVERY_RUNTIME]));
-        $this->assertEquals(GENERIS_TRUE, current($values[PROPERTY_COMPILEDDELIVERY_RUNTIME])->getUri());
+        $this->assertEquals(GenerisRdf::GENERIS_TRUE, current($values[PROPERTY_COMPILEDDELIVERY_RUNTIME])->getUri());
         
         $assembly->delete();
     }

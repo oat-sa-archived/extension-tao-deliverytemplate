@@ -21,6 +21,7 @@
 
 namespace oat\taoDeliveryTemplate\test\model;
 
+use oat\generis\model\OntologyRdf;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use \core_kernel_classes_Class;
 use \core_kernel_classes_Property;
@@ -120,7 +121,7 @@ class DeliveryTemplateServiceTest extends TaoPhpUnitTestRunner
      */
     public function testVerifyInstanceDeletion($delivery)
     {
-        $this->assertNull($delivery->getOnePropertyValue(new core_kernel_classes_Property(RDF_TYPE)));
+        $this->assertNull($delivery->getOnePropertyValue(new core_kernel_classes_Property(OntologyRdf::RDF_TYPE)));
     }
 
     /**
