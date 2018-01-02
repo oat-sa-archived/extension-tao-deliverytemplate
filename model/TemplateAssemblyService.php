@@ -19,6 +19,7 @@
  */
 namespace oat\taoDeliveryTemplate\model;
 
+use oat\generis\model\OntologyRdfs;
 use tao_models_classes_ClassService;
 use core_kernel_classes_Class;
 use core_kernel_classes_Property;
@@ -72,7 +73,7 @@ class TemplateAssemblyService extends DeliveryAssemblyService
         }
     
         $props = $deliveryTemplate->getPropertiesValues(array(
-            RDFS_LABEL,
+            OntologyRdfs::RDFS_LABEL,
             TAO_DELIVERY_RESULTSERVER_PROP,
             TAO_DELIVERY_MAXEXEC_PROP,
             TAO_DELIVERY_START_PROP,
