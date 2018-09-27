@@ -24,7 +24,7 @@ return array(
 	'label' => 'Delivery Templates',
 	'description' => 'Allows the generation of delivery templates to recreate the same delivery several times. This extension is designed for backward compatibility with Tao 2.6 and does not offer significant new features.',
     'license' => 'GPL-2.0',
-    'version' => '3.1.2',
+    'version' => '3.1.3',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array(
 	    'taoDeliveryRdf' => '>=1.1',
@@ -39,6 +39,7 @@ return array(
             dirname(__FILE__). '/install/install/deliveryTemplate.rdf'
         )
     ),
+    'update' => 'oat\\taoDeliveryTemplate\\scripts\\update\\Updater',
     'uninstall' => array(
     ),
     'autoload' => array (
