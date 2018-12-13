@@ -79,7 +79,7 @@ class DeliveryTemplate extends tao_actions_SaSModule
                 $delivery = $binder->bind($propertyValues);
 
                 // edit process label:
-                $this->service->onChangeLabel($delivery);
+                $this->getClassService()->onChangeLabel($delivery);
 
                 $this->setData("selectNode", tao_helpers_Uri::encode($delivery->getUri()));
                 $this->setData('message', __('Delivery saved'));
@@ -92,7 +92,7 @@ class DeliveryTemplate extends tao_actions_SaSModule
         $this->setData('uri', tao_helpers_Uri::encode($delivery->getUri()));
         $this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
 
-        $this->setData('hasContent', !is_null($this->service->getContent($delivery)));
+        $this->setData('hasContent', !is_null($this->getClassService()->getContent($delivery)));
 
         $this->setData('formTitle', __('Delivery properties'));
         $this->setData('myForm', $myForm->render());
@@ -111,15 +111,15 @@ class DeliveryTemplate extends tao_actions_SaSModule
         $this->defaultData();
 
         $delivery = $this->getCurrentInstance();
-        $content = $this->service->getContent($delivery);
+        $content = $this->getClassService()->getContent($delivery);
         if (!is_null($content)) {
             // Author
-            $modelImpl = $this->service->getImplementationByContent($content);
+            $modelImpl = $this->getClassService()->getImplementationByContent($content);
             return $modelImpl->getAuthoring($content);
         } else {
             // select Model
             $options = array();
-            foreach ($this->service->getAllContentClasses() as $class) {
+            foreach ($this->getClassService()->getAllContentClasses() as $class) {
                 $options[$class->getUri()] = $class->getLabel();
             }
             $dirView = $this->getServiceLocator()->get(\common_ext_ExtensionsManager::SERVICE_ID)
@@ -139,8 +139,8 @@ class DeliveryTemplate extends tao_actions_SaSModule
         $delivery = $this->getCurrentInstance();
         $contentClass = $this->getClass($this->getRequestParameter('model'));
 
-        if (is_null($this->service->getContent($delivery))) {
-            $content = $this->service->createContent($delivery, $contentClass);
+        if (is_null($this->getClassService()->getContent($delivery))) {
+            $content = $this->getClassService()->createContent($delivery, $contentClass);
             $success = true;
         } else {
             $this->logWarning('Content already defined, cannot be replaced');
@@ -165,7 +165,7 @@ class DeliveryTemplate extends tao_actions_SaSModule
             throw new \Exception("wrong request mode");
         }
 
-        $deleted = $this->service->deleteInstance($this->getCurrentInstance());
+        $deleted = $this->getClassService()->deleteInstance($this->getCurrentInstance());
 
         $this->returnJson(array(
             'deleted' => $deleted
@@ -191,7 +191,7 @@ class DeliveryTemplate extends tao_actions_SaSModule
         $deliveryData["uri"] = $delivery->getUri();
 
         //check if a wsdl contract is set to upload the result:
-        $resultServer = $this->service->getResultServer($delivery);
+        $resultServer = $this->getClassService()->getResultServer($delivery);
         $deliveryData['resultServer'] = $resultServer;
 
         $deliveryData['tests'] = array();
@@ -199,7 +199,7 @@ class DeliveryTemplate extends tao_actions_SaSModule
 
             //get the tests list from the delivery id: likely, by parsing the deliveryContent property value
             //array of resource, test set
-            $tests = $this->service->getRelatedTests($delivery);
+            $tests = $this->getClassService()->getRelatedTests($delivery);
 
             foreach($tests as $test){
                 $deliveryData['tests'][] = array(

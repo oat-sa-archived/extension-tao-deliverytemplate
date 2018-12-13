@@ -41,9 +41,6 @@ class Compilation extends tao_actions_SaSModule
         return $this->service;
     }
 
-    /*
-     * controller actions
-    */
     /**
      * Render json data to populate the delivery tree
      * 'modelType' must be in the request parameters
@@ -60,7 +57,7 @@ class Compilation extends tao_actions_SaSModule
 		$this->setData("deliveryLabel", $delivery->getLabel());
 
 		//compilation state:
-		$compiled = $this->service->getAssembliesByTemplate($delivery, true);
+		$compiled = $this->getClassService()->getAssembliesByTemplate($delivery, true);
 		$this->setData("isCompiled", !empty($compiled));
 
 		$this->setView("Compilation/index.tpl");
@@ -71,7 +68,7 @@ class Compilation extends tao_actions_SaSModule
         $this->defaultData();
 
 	    $delivery = $this->getCurrentInstance();
-	    $report = $this->service->createAssemblyFromTemplate($delivery);
+	    $report = $this->getClassService()->createAssemblyFromTemplate($delivery);
 
 	    $this->returnReport($report);
 	}
