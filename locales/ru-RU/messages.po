@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v3.1-dev\n"
-"PO-Revision-Date: 2015-06-08T14:56:31\n"
+"Project-Id-Version: TAO 3.3.0-sprint91\n"
+"PO-Revision-Date: 2018-12-14T15:30:40\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ru-RU\n"
@@ -70,7 +70,7 @@ msgstr ""
 msgid "Publishing"
 msgstr ""
 
-msgid "Publishing \"%s\"', get_data('deliveryLabel"
+msgid "Publishing \"%s"
 msgstr ""
 
 msgid "Publishing is in progress, please wait..."
